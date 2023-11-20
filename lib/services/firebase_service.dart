@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class FirestoreService {
   Stream<QuerySnapshot> eventos() {
@@ -11,7 +10,7 @@ class FirestoreService {
   }
 
   Future<void> eventoAgregar(String nombre, String lugar, String descripcion, String tipo, 
-  DateTime fechaEvento,TimeOfDay horaEvento, estado,int likes,String rutaFoto) async {
+  DateTime fechaEvento,String horaEvento, estado,int likes,String rutaFoto) async {
     return FirebaseFirestore.instance.collection('eventos').doc().set({
       'nombre': nombre,
       'lugar':lugar,
