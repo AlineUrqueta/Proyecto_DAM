@@ -1,13 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:proyecto_moviles/pages/admin/main_admin.dart';
 import 'package:proyecto_moviles/services/firebase_service.dart';
-
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../colores.dart';
 
@@ -30,9 +30,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
   String tipo = '';
   String rutaFoto = '';
 
-  //TextEditingController likesCtrl = TextEditingController();
   final formatoFecha = DateFormat('dd-MM-yyyy');
-
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -84,14 +82,13 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                         },
                       ),
                     ),
-
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
                       child: TextFormField(
                         controller: descripcionCtrl,
                         keyboardType: TextInputType.multiline,
-                                maxLines: 5,
-                                maxLength: 250,
+                        maxLines: 5,
+                        maxLength: 250,
                         decoration: InputDecoration(
                             label: Text('Descripción'),
                             fillColor: Colors.white,
@@ -217,8 +214,10 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                                       .then((hora) {
                                     setState(() {
                                       horaEvento = hora ?? horaEvento;
-                                      horaEventoString = horaEvento.hour.toString() +":" + horaEvento.minute.toString();
-                                      
+                                      horaEventoString =
+                                          horaEvento.hour.toString() +
+                                              ":" +
+                                              horaEvento.minute.toString();
                                     });
                                   });
                                 },
@@ -227,19 +226,37 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                         ),
                       ),
                     ),
-                    // Container(
-                    //   margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                    //   child: Container(
-                    //     margin: EdgeInsets.all(0),
-                    //     padding: EdgeInsets.all(7),
-                    //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),border: Border.all(color: Colors.black)),
-                    //     child: Row(
-                    //       children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      child: IconButton(
+                          onPressed: () async {
+                            ImagePicker imagePicker = ImagePicker();
+                            XFile? file = await imagePicker.pickImage(
+                                source: ImageSource.gallery);
 
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                            if (file == null) return;
+                            String uniqueFileName = DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString();
+
+                            Reference referenceRoot =
+                                FirebaseStorage.instance.ref();
+                            Reference referenceDirImages =
+                                referenceRoot.child('images');
+
+                            Reference referenceImageToUpload =
+                                referenceDirImages.child(uniqueFileName);
+
+                            try {
+                              await referenceImageToUpload
+                                  .putFile(File(file!.path));
+
+                              rutaFoto =
+                                  await referenceImageToUpload.getDownloadURL();
+                            } catch (error) {}
+                          },
+                          icon: Icon(MdiIcons.camera)),
+                    ),
                   ],
                 ),
               ),
@@ -266,18 +283,23 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                       child: Text('Agregar',
                           style: TextStyle(color: Colors.white)),
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          FirestoreService().eventoAgregar(
-                              nombreCtrl.text,
-                              lugarCtrl.text,
-                              descripcionCtrl.text,
-                              tipo,
-                              fechaEvento,
-                              horaEventoString,
-                              1,
-                              0,
-                              rutaFoto);
-                          //Navigator.pop(context);
+                        if (rutaFoto.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Ingrese una imagen')));
+                        } else {
+                          if (formKey.currentState!.validate()) {
+                            FirestoreService().eventoAgregar(
+                                nombreCtrl.text,
+                                lugarCtrl.text,
+                                descripcionCtrl.text,
+                                tipo,
+                                fechaEvento,
+                                horaEventoString,
+                                1,
+                                0,
+                                rutaFoto);
+                            //Navigator.pop(context);
+                          }
                         }
                       },
                     )
