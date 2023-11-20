@@ -6,10 +6,11 @@ class CardEvento extends StatelessWidget {
   final String foto;
   final int likes;
   final String fecha;
+  final String hora;
   final int colorBG;
   final Widget? destino;
 
-  CardEvento({this.nombre = '',this.foto = '',this.likes = 0,this.fecha = '01-01-2001',this.colorBG = 0xFF5832A8,this.destino});
+  CardEvento({this.nombre = '',this.foto = '',this.likes = 0,this.fecha = '01-01-2001',this.hora = '',this.colorBG = 0xFF5832A8,this.destino});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class CardEvento extends StatelessWidget {
         width: 350,
         decoration: BoxDecoration(color: Color(this.colorBG), borderRadius: BorderRadius.circular(5)),
         child: Column(children: [
-          Text(this.fecha, style: TextStyle(color: Colors.white),),
+          Text(this.fecha + "|" + this.hora, style: TextStyle(color: Colors.white),),
           Image.asset('assets/images/${this.foto}',height: 200),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

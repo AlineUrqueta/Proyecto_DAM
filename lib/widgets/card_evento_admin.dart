@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:proyecto_moviles/services/firebase_service.dart';
 import '../colores.dart';
 
 class CardEventoAdmin extends StatelessWidget {
   final String nombre;
   final String foto;
   final String fecha;
+  final String hora;
+  final String id;
   final int colorBG;
   final Widget? destino;
 
-  CardEventoAdmin({this.nombre = '',this.foto = '',this.fecha = '01-01-2001',this.colorBG = 0xFF5832A8,this.destino});
+  CardEventoAdmin({this.nombre = '',this.foto = '',this.fecha = '', this.hora = '',this.colorBG = 0xFF5832A8,this.destino,this.id = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class CardEventoAdmin extends StatelessWidget {
         width: 350,
         decoration: BoxDecoration(color: Color(this.colorBG), borderRadius: BorderRadius.circular(5)),
         child: Column(children: [
-          Text(this.fecha, style: TextStyle(color: Colors.white),),
+          Text(this.fecha + "|" + this.hora, style: TextStyle(color: Colors.white),),
           Image.asset('assets/images/${this.foto}',height: 200),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,7 +37,9 @@ class CardEventoAdmin extends StatelessWidget {
                   FilledButton(
                     style: FilledButton.styleFrom(backgroundColor: Color(amaNormal)),
                     child: Icon(MdiIcons.trashCan),
-                    onPressed: (){})
+                    onPressed: (){
+                      FirestoreService().eventoBorrar(this.id);
+                    })
                 ],
               ),
             ],
