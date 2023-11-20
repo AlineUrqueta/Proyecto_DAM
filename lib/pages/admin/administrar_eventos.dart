@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:proyecto_moviles/services/firebase_service.dart';
 import '../../widgets/card_evento_admin.dart';
 import '../../widgets/evento_especifico.dart';
 
@@ -10,37 +13,47 @@ class AdministrarEventos extends StatefulWidget {
 }
 
 class _AdministrarEventosState extends State<AdministrarEventos> {
+  final formatoFecha = DateFormat('dd-MM-yyyy');
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-            child: SingleChildScrollView(
-                child: Column(
-                children: [
-                  CardEventoAdmin(
-                    nombre: 'Evento 1',
-                    foto: 'fight.jpg',
-                    fecha: '20-11-2024',
+    return  Padding(
+        padding: EdgeInsets.all(10),
+                child: StreamBuilder(stream: FirestoreService().eventos(),
+                 builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
+                  if (!snapshot.hasData ||
+                snapshot.connectionState == ConnectionState.waiting) {
+
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.data!.size == 0) {
+              return Center(
+                child: Text('No hay datos'),
+              );
+            } else {
+              //Llegaron los datos
+              return ListView.separated(
+                separatorBuilder: (context, index) => Divider(thickness: 0,color: Colors.white,),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  var eventos = snapshot.data!.docs[index];
+              
+                  return CardEventoAdmin(
+                    nombre: eventos['nombre'],
+                    foto: 'blep.png',
+                    fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
+                    hora: eventos['horaEvento'],
+                    id: eventos.id,
                     destino: EventoEspecifico(
-                      nombre: 'Evento 1',
+                      nombre: eventos['nombre'],
                       foto: 'fight.jpg',
-                      fecha: '20-11-2024',
-                      hora: '20:00',
+                      fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
+                      hora: eventos['horaEvento'],
                       lugar: 'Quinta Vergara, Viña del Mar',
                       tipo: 'Concierto',
                     ),
-                  ),
-                  CardEventoAdmin(
-                    nombre: 'Evento 2',
-                    foto: 'mask.jpg',
-                    fecha: '20-11-2024',
-                  ),
-                  CardEventoAdmin(
-                    nombre: 'Evento 3',
-                    foto: 'blep.png',
-                    fecha: '20-10-2024',
-                  ),
-                ])
-              ),
-          );
+                  );
+                },
+              );
+            }
+                 }));
   }
 }

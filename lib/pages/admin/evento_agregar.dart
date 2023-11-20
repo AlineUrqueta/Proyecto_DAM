@@ -214,10 +214,11 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                                       .then((hora) {
                                     setState(() {
                                       horaEvento = hora ?? horaEvento;
+                                      final minutoFormateado = horaEvento.minute < 10 ? '0' + horaEvento.minute.toString() : horaEvento.minute.toString();
                                       horaEventoString =
                                           horaEvento.hour.toString() +
                                               ":" +
-                                              horaEvento.minute.toString();
+                                             minutoFormateado;
                                     });
                                   });
                                 },
