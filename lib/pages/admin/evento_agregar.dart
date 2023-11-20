@@ -25,6 +25,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
   TextEditingController lugarCtrl = TextEditingController();
   DateTime fechaEvento = DateTime.now();
   TimeOfDay horaEvento = TimeOfDay.now();
+  String horaEventoString = '';
 
   String tipo = '';
   String rutaFoto = '';
@@ -44,7 +45,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                 fontSize: 25,
                 fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: Color(mBrilloB),
+        backgroundColor: Colors.amber,
         leading: Icon(
           MdiIcons.plusCircle,
           color: Colors.white,
@@ -88,6 +89,9 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                       margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
                       child: TextFormField(
                         controller: descripcionCtrl,
+                        keyboardType: TextInputType.multiline,
+                                maxLines: 5,
+                                maxLength: 250,
                         decoration: InputDecoration(
                             label: Text('Descripción'),
                             fillColor: Colors.white,
@@ -179,7 +183,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                                           context: context,
                                           initialDate: DateTime.now(),
                                           firstDate: DateTime.now(),
-                                          lastDate: DateTime(2024),
+                                          lastDate: DateTime(2025),
                                           locale: Locale('es', 'ES'))
                                       .then((fecha) {
                                     setState(() {
@@ -213,7 +217,8 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                                       .then((hora) {
                                     setState(() {
                                       horaEvento = hora ?? horaEvento;
-                                      print(horaEvento);
+                                      horaEventoString = horaEvento.hour.toString() +":" + horaEvento.minute.toString();
+                                      
                                     });
                                   });
                                 },
@@ -268,7 +273,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                               descripcionCtrl.text,
                               tipo,
                               fechaEvento,
-                              horaEvento,
+                              horaEventoString,
                               1,
                               0,
                               rutaFoto);
