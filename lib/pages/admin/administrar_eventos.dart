@@ -38,17 +38,18 @@ class _AdministrarEventosState extends State<AdministrarEventos> {
               
                   return CardEventoAdmin(
                     nombre: eventos['nombre'],
-                    foto: 'blep.png',
+                    foto: eventos['rutaFoto'],
                     fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
                     hora: eventos['horaEvento'],
                     id: eventos.id,
                     destino: EventoEspecifico(
                       nombre: eventos['nombre'],
+                      descripcion :eventos['descripcion'],
                       foto: 'fight.jpg',
                       fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
                       hora: eventos['horaEvento'],
-                      lugar: 'Quinta Vergara, Viña del Mar',
-                      tipo: 'Concierto',
+                      lugar: eventos['lugar'],
+                      tipo: eventos['tipo'],
                     ),
                   );
                 },

@@ -21,7 +21,8 @@ class CardEvento extends StatelessWidget {
         decoration: BoxDecoration(color: Color(this.colorBG), borderRadius: BorderRadius.circular(5)),
         child: Column(children: [
           Text(this.fecha + "|" + this.hora, style: TextStyle(color: Colors.white),),
-          Image.asset('assets/images/${this.foto}',height: 200),
+          //Image.asset('assets/images/${this.foto}',height: 200),
+          Image.network(foto,height: 200),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

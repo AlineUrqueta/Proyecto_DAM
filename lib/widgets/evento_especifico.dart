@@ -8,10 +8,11 @@ class EventoEspecifico extends StatelessWidget {
   final String foto;
   final String fecha;
   final String lugar;
+  final String descripcion;
   final String tipo;
   final String hora;
 
-  EventoEspecifico({this.nombre = '',this.foto = '',this.fecha = '01-01-2001',this.hora = '00:00',this.lugar = '',this.tipo=''});
+  EventoEspecifico({this.nombre = '',this.descripcion= '',this.foto = '',this.fecha = '01-01-2001',this.hora = '00:00',this.lugar = '',this.tipo=''});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +86,7 @@ class EventoEspecifico extends StatelessWidget {
                   child: SingleChildScrollView(child: 
                     Column(
                       children: [
-                        Text('Lorem ipsum dolor sit amet consectetur, adipiscing elit ad porta, mi augue dignissim potenti. Molestie ultrices hendrerit lectus a tristique nibh ut sapien, mi duis habitasse luctus enim diam vel magna, tempus dapibus felis ligula est litora consequat. Aliquet euismod bibendum facilisis urna dis tristique quis sed, nascetur etiam ultrices vehicula tempus suscipit est porttitor taciti, pulvinar habitasse fermentum inceptos nisl aliquam sapien. Lacinia sagittis ridiculus quisque porta est neque taciti iaculis, quam eros auctor sodales inceptos turpis eu justo sapien, massa ad non litora venenatis ut nam. Dis orci class feugiat dui eu elementum accumsan euismod a rutrum, inceptos dapibus integer ullamcorper nullam ultricies nulla habitasse. Luctus nam dui commodo ullamcorper dictumst praesent eget, ornare himenaeos cum porttitor convallis risus duis torquent, netus vivamus iaculis tristique sociis morbi.',style: TextStyle(color: Color(mBrilloB),fontSize: 16),),
+                        Text(this.descripcion,style: TextStyle(color: Color(mBrilloB),fontSize: 16),),
                       ],
                     )),
                 ),

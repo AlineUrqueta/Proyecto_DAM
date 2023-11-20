@@ -18,16 +18,28 @@ class CardEventoAdmin extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        margin: EdgeInsets.all(8),
+        margin: EdgeInsets.all(10),
+        padding: EdgeInsets.all(8),
         width: 350,
         decoration: BoxDecoration(color: Color(this.colorBG), borderRadius: BorderRadius.circular(5)),
         child: Column(children: [
-          Text(this.fecha + "|" + this.hora, style: TextStyle(color: Colors.white),),
-          Image.asset('assets/images/${this.foto}',height: 200),
+          Text(this.fecha + " | " + this.hora, style: TextStyle(color: Colors.white,fontSize: 18),),
+          Container(
+            decoration: BoxDecoration(border: Border.all(color: Color(amaNormal),width: 5)),
+            padding: EdgeInsets.all(5),
+            child: 
+            Image.network(foto,height: 200)
+          ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(this.nombre,style: TextStyle(fontSize: 18,color: Colors.white),),
+              Container(
+                  width: 230,
+                  height: 80,
+                  padding: EdgeInsets.all(25),
+                  decoration: BoxDecoration(color: Color(amaNormal),borderRadius: BorderRadius.all(Radius.circular(10)),border: Border.all(width: 0)),
+                  child: Text(this.nombre,style: TextStyle(fontSize: 18,color: Colors.white),),),
+             
               Column(
                 children: [
                   FilledButton(
@@ -38,7 +50,10 @@ class CardEventoAdmin extends StatelessWidget {
                     style: FilledButton.styleFrom(backgroundColor: Color(amaNormal)),
                     child: Icon(MdiIcons.trashCan),
                     onPressed: (){
-                      FirestoreService().eventoBorrar(this.id);
+                      FirestoreService().eventoBorrar(this.id).then((value){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Evento ${this.nombre} eliminado')));
+                      });
                     })
                 ],
               ),

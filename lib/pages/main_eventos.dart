@@ -20,13 +20,16 @@ class MainEventos extends StatelessWidget {
           Spacer(),
           Column(
             children: [
-              InkWell(
-                onTap: (){
-                  MaterialPageRoute ruta = MaterialPageRoute(builder: (context) => MainAdmin());
-                  Navigator.push(context, ruta);
-                },
-                child: Icon(MdiIcons.accountCog),
-              
+              Container(
+                margin: EdgeInsets.all(5),
+                child: InkWell(
+                  onTap: (){
+                    MaterialPageRoute ruta = MaterialPageRoute(builder: (context) => MainAdmin());
+                    Navigator.push(context, ruta);
+                  },
+                  child: Icon(MdiIcons.accountCog,size: 35,),
+                
+                ),
               )
               
             ],
@@ -56,28 +59,28 @@ class MainEventos extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
               children: [
-                CardEvento(
-                  nombre: 'Evento épico',
-                  foto: 'blep.png',
-                  likes: 789,
-                  fecha: '20-11-2023',
-                  colorBG: amaNormal,
-                  destino: EventoEspecifico(
-                    nombre: 'Evento épico',
-                    foto: 'blep.png',
-                    fecha: '20-11-2023',
-                    hora: '20:00',
-                    lugar: 'Quinta Vergara, Viña del Mar',
-                    tipo: 'Concierto',
-                  ),
-                ),
-                CardEvento(
-                  nombre: 'Evento épico',
-                  foto: 'blep.png',
-                  likes: 789,
-                  fecha: '20-11-2023',
-                  colorBG: amaNormal,
-                ),
+                // CardEvento(
+                //   nombre: 'Evento épico',
+                //   foto: 'blep.png',
+                //   likes: 789,
+                //   fecha: '20-11-2023',
+                //   colorBG: amaNormal,
+                //   destino: EventoEspecifico(
+                //     nombre: 'Evento épico',
+                //     foto: 'blep.png',
+                //     fecha: '20-11-2023',
+                //     hora: '20:00',
+                //     lugar: 'Quinta Vergara, Viña del Mar',
+                //     tipo: 'Concierto',
+                //   ),
+                // ),
+                // CardEvento(
+                //   nombre: 'Evento épico',
+                //   foto: 'blep.png',
+                //   likes: 789,
+                //   fecha: '20-11-2023',
+                //   colorBG: amaNormal,
+                // ),
               ]
               )
             )
@@ -103,26 +106,26 @@ class MainEventos extends StatelessWidget {
             child: SingleChildScrollView(
                 child: Column(
                 children: [
-                  CardEvento(
-                    nombre: 'Evento 1',
-                    foto: 'fight.jpg',
-                    likes: 345,
-                    fecha: '20-11-2024',
-                    destino: EventoEspecifico(
-                      nombre: 'Evento 1',
-                      foto: 'fight.jpg',
-                      fecha: '20-11-2024',
-                      hora: '20:00',
-                      lugar: 'Quinta Vergara, Viña del Mar',
-                      tipo: 'Concierto',
-                    ),
-                  ),
-                  CardEvento(
-                    nombre: 'Evento 2',
-                    foto: 'mask.jpg',
-                    likes: 234,
-                    fecha: '20-11-2024',
-                  ),
+                  // CardEvento(
+                  //   nombre: 'Evento 1',
+                  //   foto: 'fight.jpg',
+                  //   likes: 345,
+                  //   fecha: '20-11-2024',
+                  //   destino: EventoEspecifico(
+                  //     nombre: 'Evento 1',
+                  //     foto: 'fight.jpg',
+                  //     fecha: '20-11-2024',
+                  //     hora: '20:00',
+                  //     lugar: 'Quinta Vergara, Viña del Mar',
+                  //     tipo: 'Concierto',
+                  //   ),
+                  // ),
+                  // CardEvento(
+                  //   nombre: 'Evento 2',
+                  //   foto: 'mask.jpg',
+                  //   likes: 234,
+                  //   fecha: '20-11-2024',
+                  // ),
                 ])
               ),
           )            

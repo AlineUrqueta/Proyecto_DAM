@@ -25,7 +25,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
   TextEditingController lugarCtrl = TextEditingController();
   DateTime fechaEvento = DateTime.now();
   TimeOfDay horaEvento = TimeOfDay.now();
-  String horaEventoString = '';
+  String horaEventoString = '00:00';
 
   String tipo = '';
   String rutaFoto = '';
@@ -214,11 +214,15 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                                       .then((hora) {
                                     setState(() {
                                       horaEvento = hora ?? horaEvento;
-                                      final minutoFormateado = horaEvento.minute < 10 ? '0' + horaEvento.minute.toString() : horaEvento.minute.toString();
+                                      final minutoFormateado =
+                                          horaEvento.minute < 10
+                                              ? '0' +
+                                                  horaEvento.minute.toString()
+                                              : horaEvento.minute.toString();
                                       horaEventoString =
                                           horaEvento.hour.toString() +
                                               ":" +
-                                             minutoFormateado;
+                                              minutoFormateado;
                                     });
                                   });
                                 },
@@ -229,34 +233,45 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: IconButton(
-                          onPressed: () async {
-                            ImagePicker imagePicker = ImagePicker();
-                            XFile? file = await imagePicker.pickImage(
-                                source: ImageSource.gallery);
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Agregar Foto'),
+                            Icon(MdiIcons.upload)
+                          ],
+                        ),
+                        onPressed: () async {
+                          ImagePicker imagePicker = ImagePicker();
+                          XFile? file = await imagePicker.pickImage(
+                              source: ImageSource.gallery);
 
-                            if (file == null) return;
-                            String uniqueFileName = DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString();
+                          if (file == null) return;
+                          String uniqueFileName =
+                              DateTime.now().millisecondsSinceEpoch.toString();
 
-                            Reference referenceRoot =
-                                FirebaseStorage.instance.ref();
-                            Reference referenceDirImages =
-                                referenceRoot.child('images');
+                          Reference referenceRoot =
+                              FirebaseStorage.instance.ref();
+                          Reference referenceDirImages =
+                              referenceRoot.child('images');
 
-                            Reference referenceImageToUpload =
-                                referenceDirImages.child(uniqueFileName);
+                          Reference referenceImageToUpload =
+                              referenceDirImages.child(uniqueFileName);
 
-                            try {
-                              await referenceImageToUpload
-                                  .putFile(File(file!.path));
+                          try {
+                            await referenceImageToUpload
+                                .putFile(File(file.path));
 
-                              rutaFoto =
-                                  await referenceImageToUpload.getDownloadURL();
-                            } catch (error) {}
-                          },
-                          icon: Icon(MdiIcons.camera)),
+                            rutaFoto =
+                                await referenceImageToUpload.getDownloadURL();
+                            if (rutaFoto.isNotEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Ingrese ingresada!')));
+                            }
+                          } catch (error) {}
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -299,7 +314,10 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                                 1,
                                 0,
                                 rutaFoto);
-                            //Navigator.pop(context);
+                            MaterialPageRoute ruta = MaterialPageRoute(builder: (context)=> MainAdmin());
+                            Navigator.push(context, ruta);
+                            
+                            
                           }
                         }
                       },
