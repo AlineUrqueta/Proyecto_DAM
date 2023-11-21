@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:proyecto_moviles/pages/admin/main_admin.dart';
 import '../colores.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/card_evento.dart';
 import '../widgets/evento_especifico.dart';
+import 'package:proyecto_moviles/services/firebase_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class MainEventos extends StatelessWidget {
-  const MainEventos({super.key});
+class MainEventos extends StatefulWidget {
+  @override
+  State<MainEventos> createState() => _MainEventosState();
+}
+
+class _MainEventosState extends State<MainEventos> {
+  final formatoFecha = DateFormat('dd-MM-yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +59,7 @@ class MainEventos extends StatelessWidget {
                 Text(' Dentro de poco',style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
               ],
             ),
- 
+            
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -100,35 +108,52 @@ class MainEventos extends StatelessWidget {
           
           //OTROS
           Expanded(
-            child: SingleChildScrollView(
-                child: Column(
-                children: [
-                  CardEvento(
-                    nombre: 'Evento 1',
-                    foto: 'fight.jpg',
-                    likes: 345,
-                    fecha: '20-11-2024',
-                    destino: EventoEspecifico(
-                      nombre: 'Evento 1',
-                      foto: 'fight.jpg',
-                      fecha: '20-11-2024',
-                      hora: '20:00',
-                      lugar: 'Quinta Vergara, Viña del Mar',
-                      tipo: 'Concierto',
-                    ),
-                  ),
-                  CardEvento(
-                    nombre: 'Evento 2',
-                    foto: 'mask.jpg',
-                    likes: 234,
-                    fecha: '20-11-2024',
-                  ),
-                ])
-              ),
-          )            
-        ]),
-        ),
-    );
+            child: StreamBuilder(stream: FirestoreService().eventos(),
+                 builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
+                  if (!snapshot.hasData ||snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.data!.size == 0) {
+              return Center(
+                child: Text('No hay datos'),
+              );
+            } else {
+              //Llegaron los datos
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  var eventos = snapshot.data!.docs[index];
+                  //Revisa que el evento ocurra despues de 3 días
+                  if((eventos['fechaEvento'] as Timestamp).toDate().isAfter(DateTime.now().add(Duration(days: 3)))){
+                    return CardEvento(
+                      nombre: eventos['nombre'],
+                      foto: 'blep.png',
+                      fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
+                      hora: eventos['horaEvento'],
+                      cardID: eventos.id,
+                      likes: eventos['likes'],
+                      destino: EventoEspecifico(
+                        nombre: eventos['nombre'],
+                        foto: 'fight.jpg',
+                        fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
+                        hora: eventos['horaEvento'],
+                        lugar: eventos['lugar'],
+                        tipo: eventos['tipo'],
+                        descripcion: eventos['descripcion'],
+                      ),
+                    );
+                  }else{
+                    return Center(
+                      child: Text('No hay datos'),
+                    );
+                  }
+                }
+                  
+              );
+            }//else llegaron datos
+          }))   //StreamBuilder Expanded
+        ]),//Column
+        ),//Padding
+    );//Scaffold
   }
 }
 
