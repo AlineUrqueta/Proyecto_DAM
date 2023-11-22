@@ -45,7 +45,7 @@ class _AdministrarEventosState extends State<AdministrarEventos> {
                     destino: EventoEspecifico(
                       nombre: eventos['nombre'],
                       descripcion :eventos['descripcion'],
-                      foto: 'fight.jpg',
+                      foto: eventos['rutaFoto'],
                       fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
                       hora: eventos['horaEvento'],
                       lugar: eventos['lugar'],
