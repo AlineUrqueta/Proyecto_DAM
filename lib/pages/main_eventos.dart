@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:proyecto_moviles/pages/admin/admin_inicio_sesion.dart';
 import 'package:proyecto_moviles/pages/admin/main_admin.dart';
 import '../colores.dart';
 import 'package:intl/intl.dart';
@@ -34,8 +35,11 @@ class _MainEventosState extends State<MainEventos> {
                   margin: EdgeInsets.all(5),
                   child: InkWell(
                     onTap: () {
+                      // MaterialPageRoute ruta =
+                      //     MaterialPageRoute(builder: (context) => MainAdmin());
+                      // Navigator.push(context, ruta);
                       MaterialPageRoute ruta =
-                          MaterialPageRoute(builder: (context) => MainAdmin());
+                          MaterialPageRoute(builder: (context) => AdminInicioSesion());
                       Navigator.push(context, ruta);
                     },
                     child: Icon(

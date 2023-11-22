@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:proyecto_moviles/pages/admin/administrar_eventos.dart';
@@ -5,8 +6,16 @@ import 'package:proyecto_moviles/pages/admin/evento_agregar.dart';
 
 import '../../colores.dart';
 
-class MainAdmin extends StatelessWidget {
-  const MainAdmin({super.key});
+class MainAdmin extends StatefulWidget {
+  
+  const MainAdmin({super.key,});
+  
+  @override
+  State<MainAdmin> createState() => _MainAdminState();
+}
+
+class _MainAdminState extends State<MainAdmin> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +31,10 @@ class MainAdmin extends StatelessWidget {
           Spacer(),
           Column(
             children: [
-              Icon(MdiIcons.logout,color: Colors.white,)
+              IconButton(onPressed: ()async{
+                await FirebaseAuth.instance.signOut();
+              }, icon:  Icon(MdiIcons.logout,color: Colors.white,))
+             
             ],
           )
         ],),
