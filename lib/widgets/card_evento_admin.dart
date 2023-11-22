@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:proyecto_moviles/pages/admin/administrar_eventos.dart';
 import 'package:proyecto_moviles/services/firebase_service.dart';
 import '../colores.dart';
 
@@ -50,10 +51,12 @@ class CardEventoAdmin extends StatelessWidget {
                     style: FilledButton.styleFrom(backgroundColor: Color(amaNormal)),
                     child: Icon(MdiIcons.trashCan),
                     onPressed: (){
-                      FirestoreService().eventoBorrar(this.id).then((value){
+                      String nomEvento = this.nombre;
+                       FirestoreService().eventoBorrar(this.id);
+                       
                         ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Evento ${this.nombre} eliminado')));
-                      });
+                              SnackBar(content: Text('Evento ${nomEvento} eliminado')));
+                      
                     })
                 ],
               ),

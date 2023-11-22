@@ -267,7 +267,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                             if (rutaFoto.isNotEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      content: Text('Ingrese ingresada!')));
+                                      content: Text('Imagen ingresada!')));
                             }
                           } catch (error) {}
                         },
@@ -302,25 +302,24 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                         if (rutaFoto.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Ingrese una imagen')));
-                        } else {
-                          if (formKey.currentState!.validate()) {
-                            FirestoreService().eventoAgregar(
-                                nombreCtrl.text,
-                                lugarCtrl.text,
-                                descripcionCtrl.text,
-                                tipo,
-                                fechaEvento,
-                                horaEventoString,
-                                1,
-                                0,
-                                rutaFoto);
-                            MaterialPageRoute ruta = MaterialPageRoute(builder: (context)=> MainAdmin());
-                            Navigator.push(context, ruta);
-                            
-                            
-                          }
                         }
-                      },
+                        if (formKey.currentState!.validate() && rutaFoto.isEmpty ) {
+                          FirestoreService().eventoAgregar(
+                              nombreCtrl.text,
+                              lugarCtrl.text,
+                              descripcionCtrl.text,
+                              tipo,
+                              fechaEvento,
+                              horaEventoString,
+                              1,
+                              0,
+                              rutaFoto);
+                          MaterialPageRoute ruta = MaterialPageRoute(builder: (context)=> MainAdmin());
+                          Navigator.push(context, ruta);
+   
+                        }
+                        }
+                      ,
                     )
                   ],
                 ),
