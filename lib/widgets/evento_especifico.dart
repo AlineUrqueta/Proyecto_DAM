@@ -12,7 +12,7 @@ class EventoEspecifico extends StatelessWidget {
   final String tipo;
   final String hora;
 
-  EventoEspecifico({this.nombre = '',this.descripcion= '',this.foto = '',this.fecha = '01-01-2001',this.hora = '00:00',this.lugar = '',this.tipo=''});
+  EventoEspecifico({this.nombre = '',this.foto = '',this.fecha = '01-01-2001',this.hora = '00:00',this.lugar = '',this.tipo='',this.descripcion = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class EventoEspecifico extends StatelessWidget {
             ],),
             Container(
               margin: EdgeInsets.symmetric(vertical: 8),
-              child: Image.asset('assets/images/${this.foto}')),
+              child: Image.network(this.foto,height: 200)),
             Row(
               children: [
                 Icon(MdiIcons.arrowDecision,color: Colors.white,),
@@ -91,8 +91,6 @@ class EventoEspecifico extends StatelessWidget {
                     )),
                 ),
                      
-              
-              
             ],)
         ]),
       ),
