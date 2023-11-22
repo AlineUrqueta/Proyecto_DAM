@@ -11,8 +11,9 @@ class EventoEspecifico extends StatelessWidget {
   final String descripcion;
   final String tipo;
   final String hora;
+  final int likes;
 
-  EventoEspecifico({this.nombre = '',this.foto = '',this.fecha = '01-01-2001',this.hora = '00:00',this.lugar = '',this.tipo='',this.descripcion = ''});
+  EventoEspecifico({this.nombre = '',this.foto = '',this.fecha = '01-01-2001',this.hora = '00:00',this.lugar = '',this.tipo='',this.descripcion = '',this.likes = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,7 @@ class EventoEspecifico extends StatelessWidget {
         foregroundColor: Colors.white,
         title: Row(children: [
           Text('Eventos Team GPB',style: TextStyle(fontWeight: FontWeight.bold)),
-          Spacer(),
-          Column(
-            children: [
-              Icon(MdiIcons.accountCog),
-              Text('Ingreso Admin',style: TextStyle(fontSize: 8,color: Colors.white),)
-            ],
-          )
+          
         ],),
       ),
 
@@ -65,6 +60,12 @@ class EventoEspecifico extends StatelessWidget {
               children: [
                 Icon(MdiIcons.clock,color: Colors.white,),
                 Text(' ${this.fecha}, ${this.hora}hrs',style: TextStyle(color: Colors.white,fontSize: 16),),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(MdiIcons.heart,color: Colors.white,),
+                Text(' ${this.likes}',style: TextStyle(color: Colors.white,fontSize: 16),),
               ],
             ),
             Row(

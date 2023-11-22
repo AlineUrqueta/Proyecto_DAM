@@ -145,6 +145,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                                     labelText: 'Tipo Evento',
                                     border: OutlineInputBorder()),
                                 value: tipo == '' ? tipos[0]['nombre'] : tipo,
+                                
                                 items:
                                     tipos.map<DropdownMenuItem<String>>((tipo) {
                                   return DropdownMenuItem<String>(

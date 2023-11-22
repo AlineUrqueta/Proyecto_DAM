@@ -22,11 +22,14 @@ class _AdminInicioSesionState extends State<AdminInicioSesion> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _auth.authStateChanges().listen((event) { 
+    if(this.mounted){
+      _auth.authStateChanges().listen((event) { 
       setState(() {
         _user = event;
       });
     });
+    }
+    
   }
   @override
   Widget build(BuildContext context) {

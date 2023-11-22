@@ -120,6 +120,7 @@ class _MainEventosState extends State<MainEventos> {
                                   lugar: eventos['lugar'],
                                   tipo: eventos['tipo'],
                                   descripcion: eventos['descripcion'],
+                                  likes: eventos['likes'],
                                 ),
                               );
                             } else {
@@ -188,6 +189,7 @@ class _MainEventosState extends State<MainEventos> {
                                   lugar: eventos['lugar'],
                                   tipo: eventos['tipo'],
                                   descripcion: eventos['descripcion'],
+                                  likes: eventos['likes']
                                 ),
                               );
                             } else {
@@ -252,6 +254,7 @@ class _MainEventosState extends State<MainEventos> {
                                   lugar: eventos['lugar'],
                                   tipo: eventos['tipo'],
                                   descripcion: eventos['descripcion'],
+                                  likes: eventos['likes']
                                 ),
                               );
                             } else {

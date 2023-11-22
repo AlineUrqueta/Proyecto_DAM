@@ -16,46 +16,51 @@ class _AdministrarEventosState extends State<AdministrarEventos> {
   final formatoFecha = DateFormat('dd-MM-yyyy');
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
         padding: EdgeInsets.all(10),
-                child: StreamBuilder(stream: FirestoreService().eventos(),
-                 builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
-                  if (!snapshot.hasData ||
-                snapshot.connectionState == ConnectionState.waiting) {
+        child: StreamBuilder(
+            stream: FirestoreService().eventos(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData ||
+                  snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.data!.size == 0) {
+                return Center(
+                  child: Text('No hay datos'),
+                );
+              } else {
+                //Llegaron los datos
+                return ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                    thickness: 0,
+                    color: Colors.white,
+                  ),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var eventos = snapshot.data!.docs[index];
 
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.data!.size == 0) {
-              return Center(
-                child: Text('No hay datos'),
-              );
-            } else {
-              //Llegaron los datos
-              return ListView.separated(
-                separatorBuilder: (context, index) => Divider(thickness: 0,color: Colors.white,),
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var eventos = snapshot.data!.docs[index];
-              
-                  return CardEventoAdmin(
-                    nombre: eventos['nombre'],
-                    foto: eventos['rutaFoto'],
-                    fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
-                    hora: eventos['horaEvento'],
-                    id: eventos.id,
-                    estado: eventos['estado'],
-                    destino: EventoEspecifico(
+                    return CardEventoAdmin(
                       nombre: eventos['nombre'],
-                      descripcion :eventos['descripcion'],
                       foto: eventos['rutaFoto'],
-                      fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
+                      fecha: formatoFecha.format(
+                          (eventos['fechaEvento'] as Timestamp).toDate()),
                       hora: eventos['horaEvento'],
-                      lugar: eventos['lugar'],
-                      tipo: eventos['tipo'],
-                    ),
-                  );
-                },
-              );
-            }
-                 }));
+                      id: eventos.id,
+                      estado: eventos['estado'],
+                      destino: EventoEspecifico(
+                          nombre: eventos['nombre'],
+                          descripcion: eventos['descripcion'],
+                          foto: eventos['rutaFoto'],
+                          fecha: formatoFecha.format(
+                              (eventos['fechaEvento'] as Timestamp).toDate()),
+                          hora: eventos['horaEvento'],
+                          lugar: eventos['lugar'],
+                          tipo: eventos['tipo'],
+                          likes: eventos['likes']),
+                    );
+                  },
+                );
+              }
+            }));
   }
 }
