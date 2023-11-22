@@ -135,20 +135,13 @@ class _MainEventosState extends State<MainEventos> {
             child: Row(
               children: [
                 Icon(
-                  MdiIcons.calendarSearch,
+                  MdiIcons.calendarCheck,
                   color: Colors.white,
                 ),
                 Text(
-                  'Todos los eventos',
+                  'Eventos activos',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
-                // Spacer(),
-                // Icon(
-                //   MdiIcons.filter,
-                //   color: Colors.white,
-                // ),
-                // Text('Filtrar  ',
-                //     style: TextStyle(color: Colors.white, fontSize: 15))
               ],
             ),
           ),
@@ -208,20 +201,13 @@ class _MainEventosState extends State<MainEventos> {
             child: Row(
               children: [
                 Icon(
-                  MdiIcons.calendarSearch,
+                  MdiIcons.calendarRemove,
                   color: Colors.white,
                 ),
                 Text(
                   'Eventos finalizados',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
-                // Spacer(),
-                // Icon(
-                //   MdiIcons.filter,
-                //   color: Colors.white,
-                // ),
-                // Text('Filtrar  ',
-                //     style: TextStyle(color: Colors.white, fontSize: 15))
               ],
             ),
           ),
