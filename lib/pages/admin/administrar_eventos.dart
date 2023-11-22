@@ -42,6 +42,7 @@ class _AdministrarEventosState extends State<AdministrarEventos> {
                     fecha: formatoFecha.format((eventos['fechaEvento'] as Timestamp).toDate()),
                     hora: eventos['horaEvento'],
                     id: eventos.id,
+                    estado: eventos['estado'],
                     destino: EventoEspecifico(
                       nombre: eventos['nombre'],
                       descripcion :eventos['descripcion'],

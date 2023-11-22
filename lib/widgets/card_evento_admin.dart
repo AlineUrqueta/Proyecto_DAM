@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:proyecto_moviles/services/firebase_service.dart';
@@ -11,8 +12,10 @@ class CardEventoAdmin extends StatelessWidget {
   final String id;
   final int colorBG;
   final Widget? destino;
+  final int estado;
 
-  CardEventoAdmin({this.nombre = '',this.foto = '',this.fecha = '', this.hora = '',this.colorBG = 0xFF5832A8,this.destino,this.id = ''});
+
+  CardEventoAdmin({this.nombre = '',this.foto = '',this.fecha = '', this.hora = '',this.colorBG = 0xFF5832A8,this.destino,this.id = '',this.estado=1});
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +47,19 @@ class CardEventoAdmin extends StatelessWidget {
                 children: [
                   FilledButton(
                     style: FilledButton.styleFrom(backgroundColor: Color(amaNormal)),
-                    child: Icon(MdiIcons.tools),
-                    onPressed: (){}),
+                    child: Icon(estado==1 ? MdiIcons.calendarCheck : MdiIcons.calendarRemove),
+                    onPressed: (){
+                      DocumentReference eventoRef = FirebaseFirestore.instance.collection('eventos').doc(id);
+                      if(estado==1){
+                        eventoRef.update({
+                          'estado' : 0
+                        });
+                      }else{
+                        eventoRef.update({
+                          'estado' : 1
+                        });
+                      }
+                    }),
                   FilledButton(
                     style: FilledButton.styleFrom(backgroundColor: Color(amaNormal)),
                     child: Icon(MdiIcons.trashCan),
