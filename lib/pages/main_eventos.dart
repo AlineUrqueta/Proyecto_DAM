@@ -93,10 +93,10 @@ class _MainEventosState extends State<MainEventos> {
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             var eventos = snapshot.data!.docs[index];
-                            //Revisa que el evento ocurra despues de 3 días
+                            //Revisa que el evento ocurra antes de 3 días
                             if ((eventos['fechaEvento'] as Timestamp)
                                 .toDate()
-                                .isAfter(
+                                .isBefore(
                                     DateTime.now().add(Duration(days: 3)))) {
                               return CardEvento(
                                 nombre: eventos['nombre'],
@@ -142,13 +142,13 @@ class _MainEventosState extends State<MainEventos> {
                   'Todos los eventos',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
-                Spacer(),
-                Icon(
-                  MdiIcons.filter,
-                  color: Colors.white,
-                ),
-                Text('Filtrar  ',
-                    style: TextStyle(color: Colors.white, fontSize: 15))
+                // Spacer(),
+                // Icon(
+                //   MdiIcons.filter,
+                //   color: Colors.white,
+                // ),
+                // Text('Filtrar  ',
+                //     style: TextStyle(color: Colors.white, fontSize: 15))
               ],
             ),
           ),
@@ -172,28 +172,31 @@ class _MainEventosState extends State<MainEventos> {
                           itemBuilder: (context, index) {
                             var eventos = snapshot.data!.docs[index];
                             //Revisa que el evento ocurra despues de 3 días
-
-                            return CardEvento(
-                              nombre: eventos['nombre'],
-                              foto: eventos['rutaFoto'],
-                              fecha: formatoFecha.format(
-                                  (eventos['fechaEvento'] as Timestamp)
-                                      .toDate()),
-                              hora: eventos['horaEvento'],
-                              cardID: eventos.id,
-                              likes: eventos['likes'],
-                              destino: EventoEspecifico(
+                            if(eventos['estado']==1){
+                              return CardEvento(
                                 nombre: eventos['nombre'],
                                 foto: eventos['rutaFoto'],
                                 fecha: formatoFecha.format(
                                     (eventos['fechaEvento'] as Timestamp)
                                         .toDate()),
                                 hora: eventos['horaEvento'],
-                                lugar: eventos['lugar'],
-                                tipo: eventos['tipo'],
-                                descripcion: eventos['descripcion'],
-                              ),
-                            );
+                                cardID: eventos.id,
+                                likes: eventos['likes'],
+                                destino: EventoEspecifico(
+                                  nombre: eventos['nombre'],
+                                  foto: eventos['rutaFoto'],
+                                  fecha: formatoFecha.format(
+                                      (eventos['fechaEvento'] as Timestamp)
+                                          .toDate()),
+                                  hora: eventos['horaEvento'],
+                                  lugar: eventos['lugar'],
+                                  tipo: eventos['tipo'],
+                                  descripcion: eventos['descripcion'],
+                                ),
+                              );
+                            } else {
+                              return Container();
+                            }
                           });
                     } //else llegaron datos
                   })),
@@ -212,13 +215,13 @@ class _MainEventosState extends State<MainEventos> {
                   'Eventos finalizados',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
-                Spacer(),
-                Icon(
-                  MdiIcons.filter,
-                  color: Colors.white,
-                ),
-                Text('Filtrar  ',
-                    style: TextStyle(color: Colors.white, fontSize: 15))
+                // Spacer(),
+                // Icon(
+                //   MdiIcons.filter,
+                //   color: Colors.white,
+                // ),
+                // Text('Filtrar  ',
+                //     style: TextStyle(color: Colors.white, fontSize: 15))
               ],
             ),
           ),
@@ -240,10 +243,7 @@ class _MainEventosState extends State<MainEventos> {
                           itemBuilder: (context, index) {
                             var eventos = snapshot.data!.docs[index];
                             //Revisa que el evento ocurra despues de 3 días
-                            if ((eventos['fechaEvento'] as Timestamp)
-                                .toDate()
-                                .isBefore(
-                                    DateTime.now())) {
+                            if (eventos['estado']==0) {
                               return CardEvento(
                                 nombre: eventos['nombre'],
                                 foto: eventos['rutaFoto'],

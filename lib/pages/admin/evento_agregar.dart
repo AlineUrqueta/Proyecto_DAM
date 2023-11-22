@@ -303,7 +303,7 @@ class _EventoAgregarPageState extends State<EventoAgregarPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Ingrese una imagen')));
                         }
-                        if (formKey.currentState!.validate() && rutaFoto.isEmpty ) {
+                        if (formKey.currentState!.validate() && rutaFoto.isNotEmpty ) {
                           FirestoreService().eventoAgregar(
                               nombreCtrl.text,
                               lugarCtrl.text,

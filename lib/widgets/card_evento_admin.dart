@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:proyecto_moviles/pages/admin/administrar_eventos.dart';
 import 'package:proyecto_moviles/services/firebase_service.dart';
 import '../colores.dart';
 
