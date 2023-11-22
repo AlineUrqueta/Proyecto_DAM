@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:proyecto_moviles/pages/admin/admin_inicio_sesion.dart';
-import 'package:proyecto_moviles/pages/admin/main_admin.dart';
 import '../colores.dart';
 import 'package:intl/intl.dart';
 

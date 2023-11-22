@@ -5,7 +5,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:proyecto_moviles/colores.dart';
 import 'package:proyecto_moviles/pages/admin/administrar_eventos.dart';
 import 'package:proyecto_moviles/pages/admin/evento_agregar.dart';
-import 'package:proyecto_moviles/pages/admin/main_admin.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 class AdminInicioSesion extends StatefulWidget {
